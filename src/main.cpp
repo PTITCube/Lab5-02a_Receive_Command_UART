@@ -11,6 +11,9 @@
 
 void setup() {
     Serial.begin(115200);
+    while (!Serial) { delay(10); }
+
+    Serial.println("\n[VỆ TINH] Khởi tạo module LoRa chờ nhận lệnh...");
     Serial2.begin(9600, SERIAL_8N1, LORA_RX, LORA_TX);
     
     // Cấu hình chân Mode (M0=0, M1=0: Chế độ hoạt động bình thường)
@@ -19,14 +22,17 @@ void setup() {
     digitalWrite(LORA_M0, LOW);
     digitalWrite(LORA_M1, LOW);
 
-    Serial.println("\n[RAW] LoRa Receiver đang lắng nghe sóng vô tuyến...");
+    Serial.println("[COM] LoRa Module OK");
+    Serial.println("[VỆ TINH] Đang lắng nghe lệnh từ trạm mặt đất...");
 }
 
 void loop() {
     // Kiểm tra xem có dữ liệu đến từ sóng không gian hay không
     if (Serial2.available() > 0) {
         String data = Serial2.readStringUntil('\n');
-        Serial.print("[RX] Nhận được bản tin thô: ");
+        data.trim();
+        Serial.print("[COM] Nhận được tin nhắn LoRa: ");
         Serial.println(data);
     }
 }
+
