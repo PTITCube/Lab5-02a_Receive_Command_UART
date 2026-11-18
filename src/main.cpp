@@ -1,34 +1,28 @@
 /**
  * VÍ DỤ 5-2a: NHẬN DỮ LIỆU TẦM XA TỪ LORA (UART THUẦN)
+ * Các chân GPIO sử dụng trực tiếp từ định nghĩa chuẩn trong PTITCube.h
  */
 #include <Arduino.h>
-
 #include <PTITCube.h>
 
 PTIT_CDH cdh;
-
-// Chân giao tiếp với module LoRa E32 chuẩn theo PTITCube.h
-#define LORA_RX  26
-#define LORA_TX  25
-#define LORA_M0  32
-#define LORA_M1  33
-#define LORA_AUX 27
 
 void setup() {
     cdh.begin(115200);
     while (!cdh) { delay(10); }
 
     cdh.println("\n[VỆ TINH] Khởi tạo module LoRa chờ nhận lệnh...");
-    Serial1.begin(9600, SERIAL_8N1, LORA_RX, LORA_TX);
+    
+    // Cấu hình chân UART1 theo chuẩn phần cứng PTITCube.h
+    Serial1.begin(9600, SERIAL_8N1, LORA_RX_PIN, LORA_TX_PIN);
     
     // Cấu hình chân Mode (M0=0, M1=0: Chế độ hoạt động bình thường)
-    pinMode(LORA_M0, OUTPUT);
-    pinMode(LORA_M1, OUTPUT);
-    pinMode(LORA_AUX, INPUT);
-    digitalWrite(LORA_M0, LOW);
-    digitalWrite(LORA_M1, LOW);
+    pinMode(LORA_M0_PIN, OUTPUT);
+    pinMode(LORA_M1_PIN, OUTPUT);
+    pinMode(LORA_AUX_PIN, INPUT);
+    digitalWrite(LORA_M0_PIN, LOW);
+    digitalWrite(LORA_M1_PIN, LOW);
 
-    cdh.println("[COM] LoRa Module OK");
     cdh.println("[VỆ TINH] Đang lắng nghe lệnh từ trạm mặt đất...");
 }
 
@@ -41,4 +35,3 @@ void loop() {
         cdh.println(data);
     }
 }
-
