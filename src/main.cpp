@@ -17,13 +17,13 @@ void setup() {
     digitalWrite(LORA_M0_PIN, LOW);
     digitalWrite(LORA_M1_PIN, LOW);
 
-    cdh.println("[COM] LoRa RX listening...");
+    cdh.println("COM: LoRa RX listening...");
 }
 
 void loop() {
     if (Serial1.available() > 0) {
         String data = Serial1.readStringUntil('\n');
         data.trim();
-        cdh.println("[RX] " + data);
+        cdh.println("RX: " + data);
     }
 }
