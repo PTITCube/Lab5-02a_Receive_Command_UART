@@ -17,7 +17,6 @@ void setup() {
     digitalWrite(LORA_M0_PIN, LOW);
     digitalWrite(LORA_M1_PIN, LOW);
 
-    cdh.println("COM: LoRa RX listening...");
 }
 
 void loop() {
